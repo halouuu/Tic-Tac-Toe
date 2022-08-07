@@ -18,14 +18,14 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 #setting up the dimensions of the screen (will probably change later)
 pygame.display.set_caption("Sophia's L3 Project - AI Tic Tac Toe <3")
 #Putting a background colour
-screen.fill(background_colour)
+screen.fill(BACKGROUND_COLOUR)
 
 class Board:
 
     def __init__ (self):
-        self.squares = np.zeros ((ROWS, COLS))
+        self.squares = np.zeros (((ROWS, COLS)))
         #zeros = empty squares
-        self.empty_squares = self.squares 
+        self.empty_squares = self.squares
         #a list of empty of empty squares
         self.marked_squares = 0
         #It will be 0 at the start because there will be no markled squares at the start of the game.
@@ -42,12 +42,12 @@ class Board:
             if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] != 0:
                 if show:
                     #this will be the colour of the winning line
-                    colour = circle_colour if self.squares[0][col] == 2 else cross_colour
+                    colour = CIRCLE_COLOUR if self.squares[0][col] == 2 else CROSS_COLOUR
                     #initial position
-                    iPos = (col * square_size + square_size // 2, 20)
+                    iPos = (col * SQUARE_SIZE + SQUARE_SIZE // 2, 20)
                     #final position
-                    fPos = (col * square_size + square_size // 2, HEIGHT - 20)
-                    pygame.draw.line(screen, colour, iPos,fPos, line_width)
+                    fPos = (col * SQUARE_SIZE + SQUARE_SIZE // 2, HEIGHT - 20)
+                    pygame.draw.line(screen, colour, iPos,fPos, LINE_WIDTH)
                 #we want it to return anyone of the squares because they are all the same number. I just chose the first one. 
                 #eg. 1 = 1 = 1 != 0, we return 1 when player one wins.
                 return self.squares[0][col]
@@ -57,12 +57,12 @@ class Board:
             if self.squares[row][0] == self.squares[row][1] == self.squares[row][2] != 0:
                 if show:
                     #this will be the colour of the winning line
-                    colour = circle_colour if self.squares[row][0] == 2 else cross_colour
+                    colour = CIRCLE_COLOUR if self.squares[row][0] == 2 else CROSS_COLOUR
                     #initial position
-                    iPos = (20, row * square_size + square_size // 2)
+                    iPos = (20, row * SQUARE_SIZE + SQUARE_SIZE // 2)
                     #final position
-                    fPos = (WIDTH - 20, row * square_size + square_size // 2)
-                    pygame.draw.line(screen, colour, iPos,fPos, line_width)
+                    fPos = (WIDTH - 20, row * SQUARE_SIZE + SQUARE_SIZE // 2)
+                    pygame.draw.line(screen, colour, iPos,fPos, LINE_WIDTH)
                 #we want it to return anyone of the squares because they are all the same number. I just chose the first one. 
                 #eg. 1 = 1 = 1 != 0, we return 1 when player one wins.
                 return self.squares[row][0]
@@ -71,18 +71,18 @@ class Board:
         #negative win
         if self.squares[0][0] == self.squares[1][1] == self.squares[2][2] != 0:
             if show:
-                colour = circle_colour if self.squares[1][1] == 2 else cross_colour
+                colour = CIRCLE_COLOUR if self.squares[1][1] == 2 else CROSS_COLOUR
                 #initial position
                 iPos = (20,20)
                 #final position
                 fPos = (WIDTH - 20, HEIGHT - 20)
-                pygame.draw.line(screen, colour, iPos, fPos, cross_width)
+                pygame.draw.line(screen, colour, iPos, fPos, CROSS_WIDTH)
             return self.squares[0][0]
 
         #positve win
         if self.squares[2][0] == self.squares[1][1] == self.squares[0][2] != 0:
             if show:
-                colour = circle_colour if self.squares[1][1] == 2 else cross_colour
+                colour = CIRCLE_COLOUR if self.squares[1][1] == 2 else CROSS_COLOUR
                 #initial position
                 iPos = (20,HEIGHT - 20)
                 #final position
@@ -114,13 +114,14 @@ class Board:
     def get_empty_squares (self):
         #empty squares will be a list which co-ordinates will be appended to.
         empty_squares = []
+
         #classic double for loop
         for row in range(ROWS):
             for col in range(COLS):
                 #if a square is empty, it will get appended into the empty squares list.
-                if self.empty_squares(row,col):
+                if self.empty_square(row,col):
                     empty_squares.append((row,col))
-
+            
         return empty_squares
 
 class AI:
@@ -250,15 +251,15 @@ class Game:
     #to show the game board lines
     def show_lines (self):
         #this will paint the screen again when it restarts.
-        screen.fill(background_colour)
+        screen.fill(BACKGROUND_COLOUR)
         
         #vertical lines
-        pygame.draw.line(screen, line_colour, (square_size, 0), (square_size, HEIGHT), line_width)
-        pygame.draw.line(screen, line_colour, (WIDTH - square_size, 0), (WIDTH - square_size, HEIGHT), line_width)
+        pygame.draw.line(screen, LINE_COLOUR, (SQUARE_SIZE, 0), (SQUARE_SIZE, HEIGHT), LINE_WIDTH)
+        pygame.draw.line(screen, LINE_COLOUR, (WIDTH - SQUARE_SIZE, 0), (WIDTH - SQUARE_SIZE, HEIGHT), LINE_WIDTH)
 
         #horizontal lines
-        pygame.draw.line(screen, line_colour, (0, square_size), (WIDTH, square_size), line_width)
-        pygame.draw.line(screen, line_colour, (0, HEIGHT - square_size), (WIDTH, HEIGHT- square_size), line_width)
+        pygame.draw.line(screen, LINE_COLOUR, (0, SQUARE_SIZE), (WIDTH, SQUARE_SIZE), LINE_WIDTH)
+        pygame.draw.line(screen, LINE_COLOUR, (0, HEIGHT - SQUARE_SIZE), (WIDTH, HEIGHT- SQUARE_SIZE), LINE_WIDTH)
 
     #to connect the console board to the graphic board
     def draw_fig(self, row, col):
@@ -266,21 +267,21 @@ class Game:
             #draw cross
             
             #starting position for negative line
-            start_neg = (col * square_size + offset, row * square_size + offset)
+            start_neg = (col * SQUARE_SIZE + OFFSET, row * SQUARE_SIZE + OFFSET)
             #ending position for negative line
-            end_neg = (col * square_size + square_size - offset, row * square_size + square_size - offset)
+            end_neg = (col * SQUARE_SIZE + SQUARE_SIZE - OFFSET, row * SQUARE_SIZE + SQUARE_SIZE - OFFSET)
             #starting position for positive line
-            start_pos = (col * square_size + offset, row * square_size + square_size - offset)
+            start_pos = (col * SQUARE_SIZE + OFFSET, row * SQUARE_SIZE + SQUARE_SIZE - OFFSET)
             #ending position for positive line
-            end_pos = (col * square_size + square_size - offset, row * square_size + offset)
+            end_pos = (col * SQUARE_SIZE + SQUARE_SIZE - OFFSET, row * SQUARE_SIZE + OFFSET)
 
-            pygame.draw.line(screen, cross_colour, start_neg, end_neg, cross_width)
-            pygame.draw.line(screen, cross_colour, start_pos, end_pos, cross_width)
+            pygame.draw.line(screen, CROSS_COLOUR, start_neg, end_neg, CROSS_WIDTH)
+            pygame.draw.line(screen, CROSS_COLOUR, start_pos, end_pos, CROSS_WIDTH)
 
         elif self.player == 2:
             #draw circle
-            center = (col * square_size + square_size // 2, row * square_size + square_size // 2)
-            pygame.draw.circle(screen , circle_colour, center, radius, circle_width)
+            center = (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2)
+            pygame.draw.circle(screen , CIRCLE_COLOUR, center, RADIUS, CIRCLE_WIDTH)
 
     #to switch players
 
@@ -356,9 +357,9 @@ def main():
                     #event.pos alone will give you postition in pixels but we want it in terms of rol and col
                     pos = event.pos
                     #pos[1] = y-axis
-                    row = pos[1] // square_size
+                    row = pos[1] // SQUARE_SIZE
                     #pos[0] = x-axis
-                    col = pos[0] // square_size
+                    col = pos[0] // SQUARE_SIZE
                 
                     if board.empty_square(row,col) and game.running:
                         game.make_move(row,col)

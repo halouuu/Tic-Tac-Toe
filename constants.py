@@ -5,20 +5,21 @@ HEIGHT = 600
 #Game board
 ROWS = 3
 COLS = 3
+
 # 3 divided by 3 = 1 = square size
-square_size = WIDTH // COLS
+SQUARE_SIZE = WIDTH // COLS
 #Colour (will be changed later on)
-background_colour = ((123,123,123))
+BACKGROUND_COLOUR = ((123,123,123))
 #lines
-line_colour = ((1,2,3))
-line_width = 15
+LINE_COLOUR = ((1,2,3))
+LINE_WIDTH = 15
 
 #circle (noughts)
-circle_width = 15
-radius = square_size // 4
-circle_colour = ((123, 132, 231))
+CIRCLE_WIDTH = 15
+RADIUS = SQUARE_SIZE // 4
+CIRCLE_COLOUR = ((123, 132, 231))
 
 #cross
-cross_colour = ((231,132,123))
-cross_width = 20
-offset = 50
+CROSS_COLOUR = ((231,132,123))
+CROSS_WIDTH = 20
+OFFSET = 50
