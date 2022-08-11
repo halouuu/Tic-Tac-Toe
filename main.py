@@ -23,7 +23,7 @@ screen.fill(BACKGROUND_COLOUR)
 class Board:
 
     def __init__ (self):
-        self.squares = np.zeros (((ROWS, COLS)))
+        self.squares = np.zeros ((ROWS, COLS))
         #zeros = empty squares
         self.empty_squares = self.squares
         #a list of empty of empty squares
@@ -82,11 +82,13 @@ class Board:
         #positve win
         if self.squares[2][0] == self.squares[1][1] == self.squares[0][2] != 0:
             if show:
+                #Colour of the winning player
                 colour = CIRCLE_COLOUR if self.squares[1][1] == 2 else CROSS_COLOUR
                 #initial position
                 iPos = (20,HEIGHT - 20)
                 #final position
                 fPos = (WIDTH - 20, 20)
+                pygame.draw.line(screen, colour, iPos, fPos, CROSS_WIDTH)
             return self.squares[0][0]
 
         #we want to return 0 if there is no win yet so if non of the above if statements are true, we return 0.
