@@ -4,6 +4,7 @@ import pygame
 from constants import *
 from setting_up import *
 from game import *
+from menu import *
 
 #initializes (starts) all pygame modules
 pygame.init()
@@ -54,15 +55,16 @@ def main():
                     #pos[0] = x-axis
                     col = pos[0] // SQUARE_SIZE
                 
-                    if board.empty_square(row,col) and game.running:
+                    if board.empty_square(row,col) and game.playing:
                         game.make_move(row,col)
 
                         if game.isover():
-                            game.running = False
+                            game.playing = False
+                            EndMenu.gameover()
 
-        if game.gamemode == 'ai' and game.player == ai.player and game.running:
+        if game.gamemode == 'ai' and game.player == ai.player and game.playing:
             #update the screen so the player can see the updated screen with the AI move before the AI makes another move.
-            pygame.display.update()
+            pygame.display.flip()
 
             #AI methods
             #ai.evaluation will return a move in the form of (row,col) which will be saved into 2 variables.
@@ -70,7 +72,8 @@ def main():
             game.make_move(row,col)
 
             if game.isover():
-                game.running = False
+                game.playing = False
+                EndMenu.gameover()
                         
        
         #This updates the display

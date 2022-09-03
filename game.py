@@ -1,4 +1,3 @@
-import imp
 from constants import *
 from setting_up import *
 from board import *
@@ -19,7 +18,7 @@ class Game:
         #defult gamemode
         self.gamemode = 'ai' #pvp or ai
         #if the game is not over. Game is over when there is a draw or a player wins.
-        self.running = True
+        self.playing = True
 
     #to show the game board lines
     def show_lines (self):

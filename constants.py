@@ -1,3 +1,5 @@
+import pygame
+
 #Dimensions of screen
 WIDTH = 600
 HEIGHT = 600
@@ -23,3 +25,11 @@ CIRCLE_COLOUR = ((123, 132, 231))
 CROSS_COLOUR = ((231,132,123))
 CROSS_WIDTH = 20
 OFFSET = 50
+
+#fonts
+FONT_NAME = pygame.font.get_default_font()
+FONT_SIZE = 15
+FONT_COLOUR = ((231,132,123))
+
+#menu
+MENU_COLOUR = ((255,255,255))
