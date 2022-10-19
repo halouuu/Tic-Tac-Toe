@@ -87,7 +87,6 @@ class Board:
         #we want to return 0 if there is no win yet so if non of the above if statements are true, we return 0.
         return 0
 
-
     def mark_square (self, row, col, player):
         #there will be two players: 1, 2. When a square is marked, the square on console board will not be zero anymore, it will be replaced with the player number (1 or 2)
         self.squares[row][col] = player
@@ -227,7 +226,6 @@ class AI:
         return move 
 
 class Game:
-
     #Init method - allows the class to initialize the attributes of the class
     #parameter is self because it access the methods and attributes
     def __init__ (self):
@@ -279,7 +277,6 @@ class Game:
             pygame.draw.circle(screen , CIRCLE_COLOUR, center, RADIUS, CIRCLE_WIDTH)
 
     #to switch players
-
     def make_move(self, row, col):
         #mark the square so we know it is not empty
         self.board.mark_square(row, col, self.player)
@@ -316,12 +313,96 @@ class EndMenu():
         pygame.time.wait(3000)
         draw_text("Thanks for playing :)", 64, 200, 200)
 
-class StartMenu():
-    pass
+
+    #Choosing between different gamemodes
+def Play():
+    while True:
+        play_mouse_pos = pygame.mouse.get_pos()
+        
+        screen.fill("Black")
+
+        play_text = main_font.render("This is the PLAY screen", True, "white")
+        play_rect = play_text.get_rect(center=(300,100))
+        
+        play_back = Button(None, (300,300), "Go back to main menu :)", "White", "Black")
+        play_pvp = Button(None, (300,400), "Play against another player!", "#d7fcd4", "Black")
+
+        screen.blit(play_text, play_rect)
+
+        for button in [play_back, play_pvp]:
+            button.ChangeColour(play_mouse_pos)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_back.CheckForInput(play_mouse_pos):
+                    main_menu()
+                if play_pvp.CheckForInput(play_mouse_pos):
+                    main()
+        
+        pygame.display.update
+
+def htp():
+    while True:
+        htp_mouse_pos = pygame.mouse.get_pos()
+
+        screen.fill((52,78,91))
+
+        htp_text = main_font.render("This is the How to Play screen.", True, "Black")
+        htp_rect = htp_text.get_rect(center=(300,100))
+        screen.blit(htp_text, htp_rect)
+
+        htp_back = Button(None, (300,400), "Baaaaaack to the Main Menu", "Black", "Green")
+        htp_back.ChangeColour(htp_mouse_pos)
+        htp_back.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if htp_back.CheckForInput(htp_mouse_pos):
+                    main_menu()
+
+def main_menu():
+    pygame.display.set_caption("Menu")
+
+    while True:
+        screen.blit(screen_bg, (0,0))
+
+        menu_mouse_pos = pygame.mouse.get_pos()
+
+        menu_text = main_font.render("This is the Main Menu", True, "White")
+        menu_rect = menu_text.get_rect(center=(300,100))
+
+        play_button = Button(None, (300,350),"Let's Play!", "#d7fcd4", "White")
+        htp_button = Button(button_bg, (300,250), "How do I play?", "Black", "White")
+
+        screen.blit (menu_text, menu_rect)
+
+        for button in [play_button, htp_button]:
+            button.ChangeColour(menu_mouse_pos)
+            button.update(screen)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_button.CheckForInput(menu_mouse_pos):
+                    print("123")
+                    Play()
+                if htp_button.CheckForInput(menu_mouse_pos):
+                    print ("456")
+                    htp()
+        
+        pygame.display.update()
 
 #The main function, will include main loop
-def main():
-    
+def main(): 
     #game object to call game class
     game = Game()
     #these variables just makes my life easier so I don't have to type game.board etc. everytime
@@ -390,4 +471,5 @@ def main():
         pygame.display.update()
 
 #runs main function
-main()
+#main()
+main_menu()
