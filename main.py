@@ -29,6 +29,7 @@ def Play():
         play_go = Button(None, (300,250), "Let's Go!", "Black", "White")
         screen.blit(play_text, play_rect)
 
+        #Displaying the text for the play screen. 
         play_body_text_show1 = text_font.render(play_body_text1, True, "Black")
         play_body_text_rect = play_body_text_show1.get_rect(center = (300, 325))
         screen.blit (play_body_text_show1, play_body_text_rect)
@@ -42,6 +43,7 @@ def Play():
         play_body_text_rect = play_body_text_show4.get_rect(center = (300, 475))
         screen.blit (play_body_text_show4, play_body_text_rect)
 
+        #Changing the colour when the mouse hovers over it
         for button in [play_back, play_go]:
             button.ChangeColour(play_mouse_pos)
             button.update(screen)
@@ -51,6 +53,7 @@ def Play():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                #Check if clicked on to go to another screen
                 if play_back.CheckForInput(play_mouse_pos):
                     main_menu()
                 if play_go.CheckForInput(play_mouse_pos):
@@ -64,10 +67,12 @@ def htp():
 
         screen.fill(BACKGROUND_COLOUR)
 
+        #Set the heading for the How to Play screen
         htp_text = main_font.render("How do I play?", True, "White")
         htp_rect = htp_text.get_rect(center=(300,100))
         screen.blit(htp_text, htp_rect)
 
+        #Showing the text for the How to Play screen
         htp_body_text_show1 = text_font.render(htp_body_text1, True, "Black")
         htp_body_text_rect = htp_body_text_show1.get_rect(center = (300,200))
         screen.blit(htp_body_text_show1, htp_body_text_rect)
@@ -81,7 +86,7 @@ def htp():
         htp_body_text_rect = htp_body_text_show4.get_rect(center = (300,350))
         screen.blit(htp_body_text_show4, htp_body_text_rect)
 
-
+        #A button to go back to the Main Menu
         htp_back = Button(None, (300,550), "Baaaaaack to the Main Menu", "Black", "White")
         htp_back.ChangeColour(htp_mouse_pos)
         htp_back.update(screen)
@@ -102,11 +107,13 @@ def main_menu():
     while True:
         screen.fill(BACKGROUND_COLOUR)
 
+        #Get the mouse position
         menu_mouse_pos = pygame.mouse.get_pos()
 
         menu_text = main_font.render("Main Menu", True, "White")
         menu_rect = menu_text.get_rect(center=(300,100))
 
+        #The two buttons to go to other screens
         play_button = Button(None, (300,250),"Let's Play!", ((0,0,0)), "White")
         htp_button = Button(None, (300,350), "How do I play?", ((0,0,0)), "White")
 
@@ -422,10 +429,9 @@ class Game:
         #this just restarts all of the attributes to all defult values.
         self.__init__()
 
-class EndMenu():
-    def gameover():
+def gameover():
         pygame.display.flip
-        draw_text("Thanks for playing :)", 64, 200, 200)
+        pygame.display.set_caption("Thanks for Playing!")
 
 #The main function, will include main loop
 def main(): 
@@ -477,7 +483,7 @@ def main():
 
                         if game.isover():
                             game.playing = False
-                            EndMenu.gameover()
+                            gameover()
 
         if game.gamemode == 'ai' and game.player == ai.player and game.playing:
             #update the screen so the player can see the updated screen with the AI move before the AI makes another move.
@@ -490,7 +496,7 @@ def main():
 
             if game.isover():
                 game.playing = False
-                EndMenu.gameover()
+                gameover()
                         
        
         #This updates the display
