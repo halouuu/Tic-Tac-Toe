@@ -13,6 +13,121 @@ from setting_up import *
 #initializes (starts) all pygame modules
 pygame.init()
 
+#Choosing between different gamemodes
+def Play():
+    while True:
+        #put the position of the mouse into a variable
+        play_mouse_pos = pygame.mouse.get_pos()
+        
+        #filling the screen 
+        screen.fill(BACKGROUND_COLOUR)
+
+        play_text = main_font.render("Choose an option...", True, "white")
+        play_rect = play_text.get_rect(center=(300,100))
+        
+        play_back = Button(None, (300,550), "Go back to main menu :)", "Black", "White")
+        play_go = Button(None, (300,250), "Let's Go!", "Black", "White")
+        screen.blit(play_text, play_rect)
+
+        play_body_text_show1 = text_font.render(play_body_text1, True, "Black")
+        play_body_text_rect = play_body_text_show1.get_rect(center = (300, 325))
+        screen.blit (play_body_text_show1, play_body_text_rect)
+        play_body_text_show2 = text_font.render(play_body_text2, True, "Black")
+        play_body_text_rect = play_body_text_show2.get_rect(center = (300, 375))
+        screen.blit (play_body_text_show2, play_body_text_rect)
+        play_body_text_show3 = text_font.render(play_body_text3, True, "Black")
+        play_body_text_rect = play_body_text_show3.get_rect(center = (300, 425))
+        screen.blit (play_body_text_show3, play_body_text_rect)
+        play_body_text_show4 = text_font.render(play_body_text4, True, "Black")
+        play_body_text_rect = play_body_text_show4.get_rect(center = (300, 475))
+        screen.blit (play_body_text_show4, play_body_text_rect)
+
+        for button in [play_back, play_go]:
+            button.ChangeColour(play_mouse_pos)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_back.CheckForInput(play_mouse_pos):
+                    main_menu()
+                if play_go.CheckForInput(play_mouse_pos):
+                    main()
+                
+        pygame.display.update()
+
+def htp():
+    while True:
+        htp_mouse_pos = pygame.mouse.get_pos()
+
+        screen.fill(BACKGROUND_COLOUR)
+
+        htp_text = main_font.render("How do I play?", True, "White")
+        htp_rect = htp_text.get_rect(center=(300,100))
+        screen.blit(htp_text, htp_rect)
+
+        htp_body_text_show1 = text_font.render(htp_body_text1, True, "Black")
+        htp_body_text_rect = htp_body_text_show1.get_rect(center = (300,200))
+        screen.blit(htp_body_text_show1, htp_body_text_rect)
+        htp_body_text_show2 = text_font.render(htp_body_text2, True, "Black")
+        htp_body_text_rect = htp_body_text_show2.get_rect(center = (300,250))
+        screen.blit(htp_body_text_show2, htp_body_text_rect)
+        htp_body_text_show3 = text_font.render(htp_body_text3, True, "Black")
+        htp_body_text_rect = htp_body_text_show3.get_rect(center = (300,300))
+        screen.blit(htp_body_text_show3, htp_body_text_rect)
+        htp_body_text_show4 = text_font.render(htp_body_text4, True, "Black")
+        htp_body_text_rect = htp_body_text_show4.get_rect(center = (300,350))
+        screen.blit(htp_body_text_show4, htp_body_text_rect)
+
+
+        htp_back = Button(None, (300,550), "Baaaaaack to the Main Menu", "Black", "White")
+        htp_back.ChangeColour(htp_mouse_pos)
+        htp_back.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if htp_back.CheckForInput(htp_mouse_pos):
+                    main_menu()
+
+        pygame.display.update()
+
+def main_menu():
+    pygame.display.set_caption("Menu")
+
+    while True:
+        screen.fill(BACKGROUND_COLOUR)
+
+        menu_mouse_pos = pygame.mouse.get_pos()
+
+        menu_text = main_font.render("Main Menu", True, "White")
+        menu_rect = menu_text.get_rect(center=(300,100))
+
+        play_button = Button(None, (300,250),"Let's Play!", ((0,0,0)), "White")
+        htp_button = Button(None, (300,350), "How do I play?", ((0,0,0)), "White")
+
+        screen.blit (menu_text, menu_rect)
+
+        for button in [play_button, htp_button]:
+            button.ChangeColour(menu_mouse_pos)
+            button.update(screen)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_button.CheckForInput(menu_mouse_pos):
+                    Play()
+                if htp_button.CheckForInput(menu_mouse_pos):
+                    htp()
+        
+        pygame.display.update()
+
 class Board:
 
     def __init__ (self):
@@ -237,7 +352,7 @@ class Game:
         self.show_lines()
         self.ai = AI()
         #defult gamemode
-        self.gamemode = 'ai' #pvp or ai
+        self.gamemode = 'pvp' #pvp or ai
         #if the game is not over. Game is over when there is a draw or a player wins.
         self.playing = True
 
@@ -310,96 +425,7 @@ class Game:
 class EndMenu():
     def gameover():
         pygame.display.flip
-        pygame.time.wait(3000)
         draw_text("Thanks for playing :)", 64, 200, 200)
-
-
-    #Choosing between different gamemodes
-def Play():
-    while True:
-        play_mouse_pos = pygame.mouse.get_pos()
-        
-        screen.fill("Black")
-
-        play_text = main_font.render("This is the PLAY screen", True, "white")
-        play_rect = play_text.get_rect(center=(300,100))
-        
-        play_back = Button(None, (300,300), "Go back to main menu :)", "White", "Black")
-        play_pvp = Button(None, (300,400), "Play against another player!", "#d7fcd4", "Black")
-
-        screen.blit(play_text, play_rect)
-
-        for button in [play_back, play_pvp]:
-            button.ChangeColour(play_mouse_pos)
-            button.update(screen)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if play_back.CheckForInput(play_mouse_pos):
-                    main_menu()
-                if play_pvp.CheckForInput(play_mouse_pos):
-                    main()
-        
-        pygame.display.update
-
-def htp():
-    while True:
-        htp_mouse_pos = pygame.mouse.get_pos()
-
-        screen.fill((52,78,91))
-
-        htp_text = main_font.render("This is the How to Play screen.", True, "Black")
-        htp_rect = htp_text.get_rect(center=(300,100))
-        screen.blit(htp_text, htp_rect)
-
-        htp_back = Button(None, (300,400), "Baaaaaack to the Main Menu", "Black", "Green")
-        htp_back.ChangeColour(htp_mouse_pos)
-        htp_back.update(screen)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if htp_back.CheckForInput(htp_mouse_pos):
-                    main_menu()
-
-def main_menu():
-    pygame.display.set_caption("Menu")
-
-    while True:
-        screen.blit(screen_bg, (0,0))
-
-        menu_mouse_pos = pygame.mouse.get_pos()
-
-        menu_text = main_font.render("This is the Main Menu", True, "White")
-        menu_rect = menu_text.get_rect(center=(300,100))
-
-        play_button = Button(None, (300,350),"Let's Play!", "#d7fcd4", "White")
-        htp_button = Button(button_bg, (300,250), "How do I play?", "Black", "White")
-
-        screen.blit (menu_text, menu_rect)
-
-        for button in [play_button, htp_button]:
-            button.ChangeColour(menu_mouse_pos)
-            button.update(screen)
-        
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if play_button.CheckForInput(menu_mouse_pos):
-                    print("123")
-                    Play()
-                if htp_button.CheckForInput(menu_mouse_pos):
-                    print ("456")
-                    htp()
-        
-        pygame.display.update()
 
 #The main function, will include main loop
 def main(): 
@@ -420,19 +446,19 @@ def main():
 
                 if event.type == pygame.KEYDOWN:
                     #changing the gamemode to pvp
-                    if event.key == pygame.K_g: 
+                    if event.key == pygame.K_1: 
                         game.change_gamemode()
-                    
+    
                     #changing the gamemode to random AI
-                    if event.key == pygame.K_0:
+                    if event.key == pygame.K_2:
                         ai.level = 0
 
                     #changing the gamemode to minimax AI
-                    if event.key == pygame.K_1:
+                    if event.key == pygame.K_3:
                         ai.level = 1
 
                     #reseting the game
-                    if event.key == pygame.K_r:
+                    if event.key == pygame.K_4:
                         game.reset()
                         #restarted the game but the board has not been restarted so this is important.
                         board = game.board
